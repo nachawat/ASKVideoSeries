@@ -10,6 +10,12 @@
         },
         "es-US": {
           "name": "Feliz Cumpleaños"
+        },
+        "fr-FR": {
+          "name": "Joyeux Anniversaire"
+        },
+        "fr-CA": {
+          "name": "Bonne Fête"
         }
       }
     },

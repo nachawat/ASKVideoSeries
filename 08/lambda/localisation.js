@@ -41,5 +41,53 @@ module.exports = {
             LAUNCH_TEXT_EMPTY_MSG: '¿Cuándo cumples?',
             LAUNCH_HINT_MSG: ['cuanto falta para mi cumpleaños?', 'quién cumple años hoy?', 'crea un recordatorio para mi cumpleaños', 'registra mi fecha de cumpleaños']
         }
+    },
+    fr: {
+        translation: {
+            WELCOME_MSG: 'Je vous souhaite la bienvenue {{name}}! ',
+            REGISTER_MSG: '{{name}} Votre date de naissance est le {{day}} {{month}} {{year}}. ',
+            DAYS_LEFT_MSG: '{{name}} Il reste vous {{count}} jour ',
+            DAYS_LEFT_MSG_plural: '{{name}} Il reste vous {{count}} jours ',
+            WILL_TURN_MSG: 'avant d\'avoir {{count}} an. ',
+            WILL_TURN_MSG_plural: 'avant d\'avoir {{count}} ans. ',
+            GREET_MSG: POSITIVE_SOUND + GREETING_SPEECHCON + ' {{name}} ',
+            NOW_TURN_MSG: 'Aujourd\'hui, vous avez {{count}} an! ',
+            NOW_TURN_MSG_plural: 'Aujourd\'hui, vous avez {{count}} ans! ',
+            MISSING_MSG: DOUBT_SPEECHCON + '. Il me semble que vous ne m\'avez pas encore dit votre date de naissance. ',
+            HELP_MSG: 'Je peux me souvenir de votre anniversaire et vous dire le nombre de jours restant avant de le fêter. $t(SHORT_HELP_MSG) ',
+            SHORT_HELP_MSG: 'Dites-moi \'enregistre ma date de naissance\' pour que je m\'en rappelle ou \'combien de jours reste-t-il avant mon anniversaire\' pour savoir le temps restant avant de l\'arroser! ',
+            GOODBYE_MSG: ['Au revoir {{name}}! ', 'A bientôt {{name}}! ', 'A la prochaine fois {{name}}! '],
+            REFLECTOR_MSG: 'Vous avez invoqué l\'intention {{intent}}',
+            FALLBACK_MSG: 'Désolé, je ne sais pas répondre à votre demande. Pouvez-vous reformuler?. ',
+            ERROR_MSG: 'Désolé, je n\'ai pas compris. Pouvez-vous reformuler? ',
+            NO_TIMEZONE_MSG: 'Je n\'ai pas réussi à déterminer votre fuseau horaire. Veuillez vérifier les paramètres de votre appareil et réessayez.',
+            REMINDER_CREATED_MSG: 'Le rappel vient d\'être créé avec succès. ',
+            REMINDER_ERROR_MSG: 'Il y a eu un problème pendant la création du rappel. ',
+            UNSUPPORTED_DEVICE_MSG: 'Votre appareil ne supporte pas la création de rappels. ',
+            CANCEL_MSG: 'Ok, J\'ai annulé la demande de rappel. ',
+            MISSING_PERMISSION_MSG: 'Je n\'ai pas accès à la création de rappels. Veuillez accéder à votre application Alexa et suivez les instructions depuis la card que je vous ai envoyé. ',
+            API_ERROR_MSG: 'Désolé, je n\'ai trouvé personne pour cette date. Veuillez réessayer. ',
+            PROGRESSIVE_MSG: 'Je recherche des célébrités nées aujourd\'hui... ',
+            CONJUNCTION_MSG: ' et ',
+            CELEBRITY_BIRTHDAYS_MSG: 'En ce jour, les célébrités suivantes fêtent leur anniversaire: ',
+            ALSO_TODAY_MSG: 'C\'est aussi l\'anniversaire de : ',
+            LAUNCH_HEADER_MSG: 'Joyeux Anniversaire',
+            LAUNCH_TEXT_FILLED_MSG: '{{day}}/{{month}}/{{year}}',
+            LAUNCH_TEXT_EMPTY_MSG: 'Quand est mon anniversaire ?',
+            LAUNCH_HINT_MSG: ['combien de temps reste-t-il avant mon anniversaire ?', 'qui est né aujourd\'hui?', 'rappelle-moi mon anniversaire', 'enregistre ma date de naissance']
+        }
+    },
+    "fr-CA" : {
+        translation: {
+            GREET_MSG: 'Bonne fête! Aujourd\'hui, vous avez {{count}} an!',
+            GREET_MSG_plural: 'Bonne fête! Aujourd\'hui, vous avez {{count}} ans! ',
+            HELP_MSG: 'Je peux me souvenir de votre fête et vous dire le nombre de jours restant avant de le célébrer. $t(SHORT_HELP_MSG)',
+            SHORT_HELP_MSG: 'Dites-moi \'sauve ma date de naissance\' pour que je m\'en rappelle ou \'combien de jours reste-t-il avant ma fête\' pour savoir le temps restant avant de l\'arroser! ',
+            CELEBRITY_BIRTHDAYS_MSG: 'En ce jour, les vedettes suivantes célèbrent leur fête: ',
+            ALSO_TODAY_MSG: 'C\'est aussi la fête de : ',
+            LAUNCH_HEADER_MSG: 'Bonne Fête',
+            LAUNCH_TEXT_EMPTY_MSG: 'Quand est ma fête ?',
+            LAUNCH_HINT_MSG: ['combien de temps reste-t-il avant ma fête ?', 'qui est né aujourd\'hui?', 'rappelle-moi ma fête', 'sauve ma date de naissance']
+        }
     }
 }

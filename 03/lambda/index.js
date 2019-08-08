@@ -17,6 +17,17 @@ const languageStrings = {
       FALLBACK_MSG: 'Lo siento, no se nada sobre eso. Por favor inténtalo otra vez.',
       ERROR_MSG: 'Lo siento, ha habido un problema. Por favor inténtalo otra vez.'
     }
+  },
+  fr:{
+    translation: {
+      WELCOME_MSG:  'Je vous souhaite la bienvenue! ',
+      REGISTER_MSG: 'Votre date de naissance est le {{day}} {{month}} {{year}}.',
+      HELP_MSG: 'Dites-moi votre jour, mois et année de naissance.',
+      GOODBYE_MSG: 'Au revoir!',
+      REFLECTOR_MSG: 'Vous avez invoqué l\'intention {{intent}}',
+      FALLBACK_MSG: 'Désolé, je ne sais pas répondre à votre demande. Pouvez-vous reformuler?.',
+      ERROR_MSG: 'Désolé, je n\'ai pas compris. Pouvez-vous reformuler?'
+    }
   }
 }
 
