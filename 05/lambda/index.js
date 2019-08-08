@@ -1,5 +1,5 @@
 const Alexa = require('ask-sdk-core');
-const persistence = require('./persistence');
+const util = require('./util');
 const interceptors = require('./interceptors');
 const moment = require('moment-timezone'); // will help us do all the birthday math
 
@@ -241,6 +241,6 @@ exports.handler = Alexa.SkillBuilders.custom()
     .addResponseInterceptors(
         interceptors.LoggingResponseInterceptor,
         interceptors.SaveAttributesResponseInterceptor)
-    .withPersistenceAdapter(persistence.getPersistenceAdapter())
+    .withPersistenceAdapter(util.getPersistenceAdapter())
     .withApiClient(new Alexa.DefaultApiClient())
     .lambda();
