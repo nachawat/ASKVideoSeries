@@ -99,7 +99,8 @@ const SayBirthdayIntentHandler = {
             && handlerInput.requestEnvelope.request.intent.name === 'SayBirthdayIntent';
     },
     async handle(handlerInput) {
-        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const {attributesManager, responseBuilder} = handlerInput;
+        const sessionAttributes = attributesManager.getSessionAttributes();
 
         const day = sessionAttributes['day'];
         const month = sessionAttributes['month']; //MM
