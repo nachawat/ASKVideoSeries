@@ -36,23 +36,30 @@ const LaunchRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const { attributesManager, responseBuilder } = handlerInput;
+        const sessionAttributes = attributesManager.getSessionAttributes();
 
         const day = sessionAttributes['day'];
-        const month = sessionAttributes['month']; //MM
         const monthName = sessionAttributes['monthName'];
         const year = sessionAttributes['year'];
 
-        let speechText = handlerInput.t('WELCOME_MSG') + handlerInput.t('HELP_MSG');
-
         const dateAvailable = day && monthName && year;
         if(dateAvailable){
-            speechText = handlerInput.t('REGISTER_MSG', {day: day, month: monthName, year: year}) + handlerInput.t('SHORT_HELP_MSG');
+            const speechText = handlerInput.t('REGISTER_MSG', {day: day, month: monthName, year: year}) 
+                                + handlerInput.t('SHORT_HELP_MSG');
+            return responseBuilder
+                .speak(speechText)
+                .reprompt(handlerInput.t('HELP_MSG'))
+                .getResponse();
         }
-
-        return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(handlerInput.t('HELP_MSG'))
+        // birthday is not yet available, use Intent Chaining to tell Alexa to handle Dialog Management for Intent 'RegisterBirthdayIntent'
+        return responseBuilder
+            .speak(handlerInput.t('WELCOME_MSG'))
+            .addDelegateDirective({
+                name: 'RegisterBirthdayIntent',
+                confirmationStatus: 'NONE',
+                slots: {}
+            })
             .getResponse();
     }
 };
@@ -98,7 +105,6 @@ const SayBirthdayIntentHandler = {
         const month = sessionAttributes['month']; //MM
         const year = sessionAttributes['year'];
 
-        let speechText;
         const dateAvailable = day && month && year;
         if(dateAvailable){
             const timezone = 'Europe/Madrid'; // provide yours here. we'll change this later to retrieve the timezone from the device
@@ -110,19 +116,27 @@ const SayBirthdayIntentHandler = {
             }
             const age = today.diff(wasBorn, 'years');
             const daysUntilBirthday = nextBirthday.startOf('day').diff(today, 'days'); // same days returns 0
-            speechText = handlerInput.t('DAYS_LEFT_MSG', {count: daysUntilBirthday});
-            speechText += handlerInput.t('WILL_TURN_MSG', {count: age + 1});
+            let speechText;
             if(daysUntilBirthday === 0) { // it's the user's birthday!
                 speechText = handlerInput.t('GREET_MSG', {count: age});
+            } else {
+                speechText = handlerInput.t('DAYS_LEFT_MSG', {count: daysUntilBirthday});
+                speechText += handlerInput.t('WILL_TURN_MSG', {count: age + 1});
             }
-        } else {
-            speechText = handlerInput.t('MISSING_MSG');
+            speechText += handlerInput.t('SHORT_HELP_MSG');
+            return responseBuilder
+                .speak(speechText)
+                .reprompt(handlerInput.t('HELP_MSG'))
+                .getResponse();
         }
-        speechText += handlerInput.t('SHORT_HELP_MSG');
-
-        return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(handlerInput.t('HELP_MSG'))
+        // birthday is not yet available, use Intent Chaining to tell Alexa to handle Dialog Management for Intent 'RegisterBirthdayIntent'
+        return responseBuilder
+            .speak(handlerInput.t('MISSING_MSG'))
+            .addDelegateDirective({
+                name: 'RegisterBirthdayIntent',
+                confirmationStatus: 'NONE',
+                slots: {}
+            })
             .getResponse();
     }
 };
