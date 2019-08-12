@@ -152,5 +152,6 @@ module.exports = {
     LoadAttributesRequestInterceptor,
     SaveAttributesResponseInterceptor,
     LoadNameRequestInterceptor,
-    LoadTimezoneRequestInterceptor
+    LoadTimezoneRequestInterceptor,
+    SDKUtilitiesRequestInterceptor
 }

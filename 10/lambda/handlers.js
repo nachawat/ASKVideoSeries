@@ -71,7 +71,7 @@ const RegisterBirthdayIntentHandler = {
                             headerTitle: handlerInput.t('LAUNCH_HEADER_MSG'),
                             mainText: handlerInput.t('LAUNCH_TEXT_FILLED_MSG', {day: day, month: parseInt(month, 10), year: year}),
                             hintString: handlerInput.t('LAUNCH_HINT_MSG'),
-                            logoImage: !handlerInput.getViewportProfle().endsWith('-SMALL') ? util.getS3PreSignedUrl('Media/full_icon_512.png') : util.getS3PreSignedUrl('Media/full_icon_108.png'),
+                            logoImage: !handlerInput.getViewportProfile().endsWith('-SMALL') ? util.getS3PreSignedUrl('Media/full_icon_512.png') : util.getS3PreSignedUrl('Media/full_icon_108.png'),
                             backgroundImage: util.getS3PreSignedUrl('Media/garlands_'+resolution+'.png'),
                             backgroundOpacity: "0.5"
                         },
@@ -170,7 +170,7 @@ const SayBirthdayIntentHandler = {
                                 headerTitle: handlerInput.t('LAUNCH_HEADER_MSG'),
                                 mainText: isBirthday ? sessionAttributes['age'] : handlerInput.t('DAYS_LEFT_MSG', {name: '', count: sessionAttributes['daysLeft']}),
                                 hintString: handlerInput.t('LAUNCH_HINT_MSG'),
-                                logoImage: isBirthday ? null : !handlerInput.getViewportProfle().endsWith('-SMALL') ? util.getS3PreSignedUrl('Media/full_icon_512.png') : util.getS3PreSignedUrl('Media/full_icon_108.png'),
+                                logoImage: isBirthday ? null : !handlerInput.getViewportProfile().endsWith('-SMALL') ? util.getS3PreSignedUrl('Media/full_icon_512.png') : util.getS3PreSignedUrl('Media/full_icon_108.png'),
                                 backgroundImage: isBirthday ? util.getS3PreSignedUrl('Media/cake_'+resolution+'.png') : util.getS3PreSignedUrl('Media/papers_'+resolution+'.png'),
                                 backgroundOpacity: isBirthday ? "1" : "0.5"
                             },
@@ -222,7 +222,7 @@ const RemindBirthdayIntentHandler = {
         const month = sessionAttributes['month'];
         const year = sessionAttributes['year'];
         let timezone = requestAttributes['timezone'];
-        const message = handlerInput.getSlotValue(message);
+        const message = handlerInput.getSlotValue('message');
 
         if(day && month && year){
             if(!timezone){
@@ -305,7 +305,7 @@ const RemindBirthdayIntentHandler = {
                                 headerTitle: handlerInput.t('LAUNCH_HEADER_MSG'),
                                 mainText: speechText,
                                 hintString: handlerInput.t('LAUNCH_HINT_MSG'),
-                                logoImage: !handlerInput.getViewportProfle().endsWith('-SMALL') ? util.getS3PreSignedUrl('Media/full_icon_512.png') : util.getS3PreSignedUrl('Media/full_icon_108.png'),
+                                logoImage: !handlerInput.getViewportProfile().endsWith('-SMALL') ? util.getS3PreSignedUrl('Media/full_icon_512.png') : util.getS3PreSignedUrl('Media/full_icon_108.png'),
                                 backgroundImage: util.getS3PreSignedUrl('Media/straws_'+resolution+'.png'),
                                 backgroundOpacity: "0.5"
                             },
