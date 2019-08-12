@@ -12,30 +12,24 @@ const LaunchRequestHandler = {
         const sessionAttributes = attributesManager.getSessionAttributes();
 
         const day = sessionAttributes['day'];
-        const month = sessionAttributes['month']; //MM
         const monthName = sessionAttributes['monthName'];
         const year = sessionAttributes['year'];
         const name = sessionAttributes['name'] ? sessionAttributes['name'] + '.' : '';
-
-        let speechText = handlerInput.t('WELCOME_MSG', {name: name+'.'});
 
         const dateAvailable = day && monthName && year;
         if(dateAvailable) {
             // we can't use intent chaining because the intent is not dialog based
             return SayBirthdayIntentHandler.handle(handlerInput);
-        } else {
-            speechText += handlerInput.t('MISSING_MSG');
-            // we use intent chaining to trigger the birthday registration multi-turn
-            handlerInput.responseBuilder.addDelegateDirective({
+        }
+        const speechText = handlerInput.t('WELCOME_MSG', {name: name+'.'}) + handlerInput.t('MISSING_MSG');
+        // we use intent chaining to trigger the birthday registration multi-turn
+        return handlerInput.responseBuilder
+            .speak(speechText)
+            .addDelegateDirective({
                 name: 'RegisterBirthdayIntent',
                 confirmationStatus: 'NONE',
                 slots: {}
-            });
-        }
-
-        return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(handlerInput.t('HELP_MSG'))
+            })
             .getResponse();
     }
 };
@@ -76,7 +70,7 @@ const SayBirthdayIntentHandler = {
             && handlerInput.requestEnvelope.request.intent.name === 'SayBirthdayIntent';
     },
     async handle(handlerInput) {
-        const {attributesManager} = handlerInput;
+        const { attributesManager, responseBuilder} = handlerInput;
         const requestAttributes = attributesManager.getRequestAttributes();
         const sessionAttributes = attributesManager.getSessionAttributes();
 
@@ -86,12 +80,11 @@ const SayBirthdayIntentHandler = {
         const name = sessionAttributes['name'] ? sessionAttributes['name'] + '. ' : '';
         let timezone = requestAttributes['timezone'];
 
-        let speechText;
         const dateAvailable = day && month && year;
         if(dateAvailable){
             if(!timezone){
                 //timezone = 'Europe/Madrid';  // so it works on the simulator, you should uncomment this line, replace with your time zone and comment sentence below
-                return handlerInput.responseBuilder
+                return responseBuilder
                     .speak(handlerInput.t('NO_TIMEZONE_MSG'))
                     .getResponse();
             }
@@ -103,20 +96,28 @@ const SayBirthdayIntentHandler = {
             }
             const age = today.diff(wasBorn, 'years');
             const daysUntilBirthday = nextBirthday.startOf('day').diff(today, 'days'); // same day returns 0
-            speechText = handlerInput.t('DAYS_LEFT_MSG', {name: name, count: daysUntilBirthday});
-            speechText += handlerInput.t('WILL_TURN_MSG', {count: age + 1});
+            let speechText;
             if(daysUntilBirthday === 0) { // it's the user's birthday!
                 speechText = handlerInput.t('GREET_MSG', {name: name});
                 speechText += handlerInput.t('NOW_TURN_MSG', {count: age});
+            } else {
+                speechText = handlerInput.t('DAYS_LEFT_MSG', {name: name, count: daysUntilBirthday});
+                speechText += handlerInput.t('WILL_TURN_MSG', {count: age + 1});
             }
-        } else {
-            speechText = handlerInput.t('MISSING_MSG');
+            speechText += handlerInput.t('SHORT_HELP_MSG');
+            return responseBuilder
+                .speak(speechText)
+                .reprompt(handlerInput.t('HELP_MSG'))
+                .getResponse();
         }
-        speechText += handlerInput.t('SHORT_HELP_MSG');
-
-        return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(handlerInput.t('HELP_MSG'))
+        // birthday is not yet available, use Intent Chaining to tell Alexa to handle Dialog Management for Intent 'RegisterBirthdayIntent'
+        return responseBuilder
+            .speak(handlerInput.t('MISSING_MSG'))
+            .addDelegateDirective({
+                name: 'RegisterBirthdayIntent',
+                confirmationStatus: 'NONE',
+                slots: {}
+            })
             .getResponse();
     }
 };
