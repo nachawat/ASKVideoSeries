@@ -3,8 +3,16 @@
 const POSITIVE_SOUND = `<audio src='soundbank://soundlibrary/ui/gameshow/amzn_ui_sfx_gameshow_positive_response_02'/>`;
 // congratulations greeting (speechcon)
 // https://developer.amazon.com/docs/custom-skills/speechcon-reference-interjections-spanish.html
-const GREETING_SPEECHCON = `<say-as interpret-as="interjection">felicidades</say-as>`;
-const DOUBT_SPEECHCON = `<say-as interpret-as="interjection">hmm</say-as>`;
+const ES = {
+    GREETING_SPEECHCON: `<say-as interpret-as="interjection">felicidades</say-as>`,
+    DOUBT_SPEECHCON: `<say-as interpret-as="interjection">hmm</say-as>`
+}
+// https://developer.amazon.com/docs/custom-skills/speechcon-reference-interjections-french.html
+// https://developer.amazon.com/docs/custom-skills/speechcon-reference-interjections-french-ca.html
+const FR = {
+    GREETING_SPEECHCON: `<say-as interpret-as="interjection">Yay</say-as>`,
+    DOUBT_SPEECHCON: `<say-as interpret-as="interjection">Hmmm</say-as>`
+}
 
 module.exports = {
     es: {
@@ -15,10 +23,10 @@ module.exports = {
             DAYS_LEFT_MSG_plural: '{{name}} Faltan {{count}} días ',
             WILL_TURN_MSG: 'para que cumplas {{count}} año. ',
             WILL_TURN_MSG_plural: 'para que cumplas {{count}} años. ',
-            GREET_MSG: POSITIVE_SOUND + GREETING_SPEECHCON + ' {{name}} ',
+            GREET_MSG: POSITIVE_SOUND + ES.GREETING_SPEECHCON + '! {{name}} ',
             NOW_TURN_MSG: 'Hoy cumples {{count}} año! ',
             NOW_TURN_MSG_plural: 'Hoy cumples {{count}} años! ',
-            MISSING_MSG: DOUBT_SPEECHCON + '. Parece que aun no me has dicho tu fecha de cumpleaños. ',
+            MISSING_MSG: ES.DOUBT_SPEECHCON + '. Parece que aun no me has dicho tu fecha de cumpleaños. ',
             HELP_MSG: 'Puedo recordar tu cumpleaños si me dices una fecha. Y decirte cuanto falta para que cumplas. También puedo crear un recordatorio para cuando cumplas o decirte quién cumple años hoy. ',
             SHORT_HELP_MSG: 'Dime que otra cosa quieres hacer. ',
             GOODBYE_MSG: ['Hasta luego {{name}}! ', 'Adios {{name}}! ', 'Hasta pronto {{name}}! ', 'Nos vemos {{name}}! '],
@@ -55,10 +63,10 @@ module.exports = {
             DAYS_LEFT_MSG_plural: '{{name}} Il vous reste {{count}} jours ',
             WILL_TURN_MSG: 'avant d\'avoir {{count}} an. ',
             WILL_TURN_MSG_plural: 'avant d\'avoir {{count}} ans. ',
-            GREET_MSG: POSITIVE_SOUND + GREETING_SPEECHCON + ' {{name}} ',
+            GREET_MSG: POSITIVE_SOUND + FR.GREETING_SPEECHCON + '! {{name}} ',
             NOW_TURN_MSG: 'Aujourd\'hui, vous avez {{count}} an! ',
             NOW_TURN_MSG_plural: 'Aujourd\'hui, vous avez {{count}} ans! ',
-            MISSING_MSG: DOUBT_SPEECHCON + '. Il me semble que vous ne m\'avez pas encore dit votre date de naissance. ',
+            MISSING_MSG: FR.DOUBT_SPEECHCON + '. Il me semble que vous ne m\'avez pas encore dit votre date de naissance. ',
             HELP_MSG: 'Je peux me souvenir de votre anniversaire et vous dire le nombre de jours restant avant de le fêter. $t(SHORT_HELP_MSG) ',
             SHORT_HELP_MSG: 'Dites-moi \'enregistre ma date de naissance\' pour que je m\'en rappelle ou \'combien de jours reste-t-il avant mon anniversaire\' pour savoir le temps restant avant de l\'arroser! ',
             GOODBYE_MSG: ['Au revoir {{name}}! ', 'A bientôt {{name}}! ', 'A la prochaine fois {{name}}! '],
