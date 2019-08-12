@@ -84,12 +84,6 @@ const RegisterBirthdayIntentHandler = {
             });
         }
 
-        // Add card to response
-        responseBuilder.withStandardCard(
-                handlerInput.t('LAUNCH_HEADER_MSG'),
-                handlerInput.t('LAUNCH_TEXT_FILLED_MSG', {day: day, month: parseInt(month, 10), year: year}),
-                util.getS3PreSignedUrl('Media/garlands_480x480.png'));
-
         return responseBuilder
             .speak(speechText)
             .reprompt(handlerInput.t('HELP_MSG'))
@@ -150,11 +144,6 @@ const SayBirthdayIntentHandler = {
                 speechText = handlerInput.t('DAYS_LEFT_MSG', {name: name, count: birthdayData.daysUntilBirthday});
                 speechText += handlerInput.t('WILL_TURN_MSG', {count: birthdayData.age + 1});
             }
-            // Add card to response
-            responseBuilder.withStandardCard(
-                handlerInput.t('LAUNCH_HEADER_MSG'),
-                isBirthday ? sessionAttributes['age'] : handlerInput.t('DAYS_LEFT_MSG', {name: '', count: sessionAttributes['daysLeft']}),
-                isBirthday ? util.getS3PreSignedUrl('Media/cake_480x480.png') : util.getS3PreSignedUrl('Media/papers_480x480.png'));
             // Add APL directive to response
             if (util.supportsAPL(handlerInput)) {
                 const {Viewport} = handlerInput.requestEnvelope.context;
@@ -285,11 +274,6 @@ const RemindBirthdayIntentHandler = {
                         speechText = handlerInput.t('REMINDER_ERROR_MSG');
                 }
             }
-            // Add card to response
-            responseBuilder.withStandardCard(
-                handlerInput.t('LAUNCH_HEADER_MSG'),
-                speechText,
-                util.getS3PreSignedUrl('Media/straws_480x480.png'));
             // Add APL directive to response
             if (util.supportsAPL(handlerInput)) {
                 const {Viewport} = requestEnvelope.context;
@@ -411,12 +395,6 @@ const CelebrityBirthdaysIntentHandler = {
                 }
             });
         }
-
-        // Add card to response
-        handlerInput.responseBuilder.withStandardCard(
-                handlerInput.t('LIST_HEADER_MSG'),
-                speechText,
-                util.getS3PreSignedUrl('Media/lights_480x480.png'));
 
         speechText += handlerInput.t('SHORT_HELP_MSG');
 
