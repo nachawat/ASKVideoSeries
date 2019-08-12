@@ -217,7 +217,6 @@ const RemindBirthdayIntentHandler = {
         const day = sessionAttributes['day'];
         const month = sessionAttributes['month'];
         const year = sessionAttributes['year'];
-        const name = requestAttributes['name'] ? requestAttributes['name'] : '';
         let timezone = requestAttributes['timezone'];
         const message = handlerInput.getSlotValue(message);
 
@@ -345,8 +344,6 @@ const CelebrityBirthdaysIntentHandler = {
     async handle(handlerInput) {
         const {requestEnvelope, serviceClientFactory, attributesManager} = handlerInput;
         const requestAttributes = attributesManager.getRequestAttributes();
-        const sessionAttributes = attributesManager.getSessionAttributes()
-        const name = requestAttributes['name'] ? requestAttributes['name'] : '';
         let timezone = requestAttributes['timezone'];
 
         if(!timezone){

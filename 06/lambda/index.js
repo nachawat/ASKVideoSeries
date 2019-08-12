@@ -136,7 +136,6 @@ const RemindBirthdayIntentHandler = {
         const day = sessionAttributes['day'];
         const month = sessionAttributes['month'];
         const year = sessionAttributes['year'];
-        const name = requestAttributes['name'] ? requestAttributes['name'] : '';
         let timezone = requestAttributes['timezone'];
         const message = intent.slots.message.value;
 
