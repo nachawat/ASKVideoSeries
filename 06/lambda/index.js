@@ -1,10 +1,8 @@
 const Alexa = require('ask-sdk-core');
-const persistence = require('./persistence');
+const util = require('./util');
 const interceptors = require('./interceptors');
 const logic = require('./logic');
-
-// these are the permissions needed to send reminders
-const REMINDERS_PERMISSION = ['alexa::alerts:reminders:skill:readwrite'];
+const constants = require('./constants');
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -197,7 +195,7 @@ const RemindBirthdayIntentHandler = {
                 console.log(JSON.stringify(error));
                 switch (error.statusCode) {
                     case 401: // the user has to enable the permissions for reminders, let's attach a permissions card to the response
-                        handlerInput.responseBuilder.withAskForPermissionsConsentCard(REMINDERS_PERMISSION);
+                        handlerInput.responseBuilder.withAskForPermissionsConsentCard(constants.REMINDERS_PERMISSION);
                         speechText = handlerInput.t('MISSING_PERMISSION_MSG');
                         break;
                     case 403: // devices such as the simulator do not support reminder management
@@ -341,6 +339,6 @@ exports.handler = Alexa.SkillBuilders.custom()
     .addResponseInterceptors(
         interceptors.LoggingResponseInterceptor,
         interceptors.SaveAttributesResponseInterceptor)
-    .withPersistenceAdapter(persistence.getPersistenceAdapter())
+    .withPersistenceAdapter(util.getPersistenceAdapter())
     .withApiClient(new Alexa.DefaultApiClient())
     .lambda();

@@ -1,5 +1,5 @@
 const Alexa = require('ask-sdk-core');
-const persistence = require('./persistence');
+const util = require('./util');
 const interceptors = require('./interceptors');
 const logic = require('./logic');
 const constants = require('./constants');
@@ -257,7 +257,7 @@ const CelebrityBirthdaysIntentHandler = {
 
         try {
             // call the progressive response service
-            await logic.callDirectiveService(handlerInput, handlerInput.t('PROGRESSIVE_MSG'));
+            await util.callDirectiveService(handlerInput, handlerInput.t('PROGRESSIVE_MSG'));
           } catch (error) {
             // if it fails we can continue, but the user will wait without progressive response
             console.log("Progressive directive error : " + error);
@@ -410,6 +410,6 @@ exports.handler = Alexa.SkillBuilders.custom()
     .addResponseInterceptors(
         interceptors.LoggingResponseInterceptor,
         interceptors.SaveAttributesResponseInterceptor)
-    .withPersistenceAdapter(persistence.getPersistenceAdapter())
+    .withPersistenceAdapter(util.getPersistenceAdapter())
     .withApiClient(new Alexa.DefaultApiClient())
     .lambda();

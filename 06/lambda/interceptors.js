@@ -1,9 +1,8 @@
 // i18n dependency
 const i18n = require('i18next');
 const languageStrings = require('./localisation');
-
-// these are the permissions needed to get the first name
-const GIVEN_NAME_PERMISSION = ['alexa::profile:given_name:read'];
+// constants definition
+const constants = require('./constants');
 
 // This request interceptor will log all incoming requests to this lambda
 const LoggingRequestInterceptor = {
@@ -99,7 +98,7 @@ const LoadNameRequestInterceptor = {
                 if (error.statusCode === 401 || error.statusCode === 403) {
                     // the user needs to enable the permissions for given name, let's send a silent permissions card.
                     handlerInput.responseBuilder
-                    .withAskForPermissionsConsentCard(GIVEN_NAME_PERMISSION);
+                    .withAskForPermissionsConsentCard(constants.GIVEN_NAME_PERMISSION);
                 }
             }
         }
