@@ -125,8 +125,6 @@ const SayBirthdayIntentHandler = {
             const birthdayData = logic.getBirthdayData(day, month, year, timezone);
             sessionAttributes['age'] = birthdayData.age;
             sessionAttributes['daysLeft'] = birthdayData.daysUntilBirthday;
-            speechText = handlerInput.t('DAYS_LEFT_MSG', {name: name, count: birthdayData.daysUntilBirthday});
-            speechText += handlerInput.t('WILL_TURN_MSG', {count: birthdayData.age + 1});
             let speechText;
             const isBirthday = birthdayData.daysUntilBirthday === 0;
             if(isBirthday) { // it's the user's birthday!
