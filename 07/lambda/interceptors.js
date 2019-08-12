@@ -73,8 +73,8 @@ const SaveAttributesResponseInterceptor = {
 const LoadNameRequestInterceptor = {
     async process(handlerInput) {
         const {attributesManager, serviceClientFactory, requestEnvelope} = handlerInput;
-        const sessionAttributes = attributesManager.getSessionAttributes();
-        if(!sessionAttributes['name']){
+        const requestAttributes = attributesManager.getRequestAttributes();
+        if(!requestAttributes['name']){
             // let's try to get the given name via the Customer Profile API
             // don't forget to enable this permission in your skill configuratiuon (Build tab -> Permissions)
             // or you'll get a SessionEndedRequest with an ERROR of type INVALID_RESPONSE
@@ -85,15 +85,10 @@ const LoadNameRequestInterceptor = {
                 const upsServiceClient = serviceClientFactory.getUpsServiceClient();
                 const profileName = await upsServiceClient.getProfileGivenName();
                 if (profileName) { // the user might not have set the name
-                    //save to session and persisten attributes
-                    sessionAttributes['name'] = profileName;
-                    attributesManager.setSessionAttributes(sessionAttributes);
-                } else {
-                    delete sessionAttributes['name'];
+                    requestAttributes['name'] = profileName;
                 }
             } catch (error) {
                 console.log(JSON.stringify(error));
-                delete sessionAttributes['name'];
                 if (error.statusCode === 401 || error.statusCode === 403) {
                     // the user needs to enable the permissions for given name, let's send a silent permissions card.
                     handlerInput.responseBuilder
@@ -118,15 +113,10 @@ const LoadTimezoneRequestInterceptor = {
                 const timezone = await upsServiceClient.getSystemTimeZone(deviceId);
                 if (timezone) { // the user might not have set the timezone yet
                     console.log('Got timezone from device: ' + timezone);
-                    //save to session and persisten attributes
                     requestAttributes['timezone'] = timezone;
-                    attributesManager.setRequestAttributes(requestAttributes);
-                } else {
-                    delete requestAttributes['timezone'];
                 }
             } catch (error) {
                 console.log(JSON.stringify(error));
-                delete requestAttributes['timezone'];
             }
         }
     }

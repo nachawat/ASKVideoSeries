@@ -10,12 +10,13 @@ const LaunchRequestHandler = {
     handle(handlerInput) {
         const {attributesManager} = handlerInput;
         const sessionAttributes = attributesManager.getSessionAttributes();
+        const requestAttributes = attributesManager.getRequestAttributes();
 
         const day = sessionAttributes['day'];
         const month = sessionAttributes['month']; //MM
         const monthName = sessionAttributes['monthName'];
         const year = sessionAttributes['year'];
-        const name = sessionAttributes['name'] ? sessionAttributes['name'] + '.' : '';
+        const name = requestAttributes['name'] ? requestAttributes['name'] + '.' : '';
 
         let speechText = handlerInput.t('WELCOME_MSG', {name: name+'.'});
 
@@ -48,6 +49,7 @@ const RegisterBirthdayIntentHandler = {
     handle(handlerInput) {
         const {attributesManager, requestEnvelope} = handlerInput;
         const sessionAttributes = attributesManager.getSessionAttributes();
+        const requestAttributes = attributesManager.getRequestAttributes();
         const {intent} = requestEnvelope.request;
 
         const day = intent.slots.day.value;
@@ -59,7 +61,7 @@ const RegisterBirthdayIntentHandler = {
         sessionAttributes['month'] = month; //MM
         sessionAttributes['monthName'] = monthName;
         sessionAttributes['year'] = year;
-        const name = sessionAttributes['name'] ? sessionAttributes['name'] + '. ' : '';
+        const name = requestAttributes['name'] ? requestAttributes['name'] + '. ' : '';
 
         const speechText = handlerInput.t('REGISTER_MSG', {name: name, day: day, month: monthName, year: year}) + handlerInput.t('SHORT_HELP_MSG');
 
@@ -83,7 +85,7 @@ const SayBirthdayIntentHandler = {
         const day = sessionAttributes['day'];
         const month = sessionAttributes['month']; //MM
         const year = sessionAttributes['year'];
-        const name = sessionAttributes['name'] ? sessionAttributes['name'] + '. ' : '';
+        const name = requestAttributes['name'] ? requestAttributes['name'] + '. ' : '';
         let timezone = requestAttributes['timezone'];
 
         let speechText;
@@ -143,8 +145,8 @@ const CancelAndStopIntentHandler = {
                 || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        const name = sessionAttributes['name'] ? sessionAttributes['name'] : '';
+        const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+        const name = requestAttributes['name'] ? requestAttributes['name'] : '';
 
         const speechText = handlerInput.t('GOODBYE_MSG', {name: name});
 
